@@ -7,34 +7,33 @@ const colors = [
     '#795548',
   ];
 
-  const bodySite=document.querySelector('body');
-  const buttonStart=document.querySelector('.start');
-  const buttonStop=document.querySelector('.stop');
-  
-  const randomIntegerFromInterval = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+const body = document.querySelector("body");
+const buttonStart = document.querySelector(".start");
+const buttonStop = document.querySelector(".stop");
+
+const randomIntegerFromInterval = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-  let currentColor,
-  newColor = "#FFFFFF";
-  let timerId=0;
+let timerId=0;
 
+const toStart = () => {
+  buttonStart.setAttribute('disabled', true);
+  timerId = setInterval(() => {
+    body.style.backgroundColor=colors[randomIntegerFromInterval(0, colors.length-1)]
+    console.log(body.style.backgroundColor)
+  }, 1000);
+};
 
-  buttonStart.addEventListener("click", changeColor);
-    function changeColor() {
-        buttonStart.setAttribute('disabled', true);
-        currentColor = newColor;
-    timerId = setInterval(() => {
-    do {
-        newColor = colors[randomIntegerFromInterval(0, colors.length - 1)];
-      } while (newColor === currentColor);
-      bodySite.style.backgroundColor = newColor;
-      currentColor = newColor;
-    }, 1000);};
-
-
-buttonStop.addEventListener("click", () => {
+const toStop = () => {
+  clearInterval(timerId);
   buttonStart.removeAttribute('disabled');
-    clearInterval(timerId);
-    timerId=0;
-  });
+};
+
+buttonStart.addEventListener('click',toStart);
+buttonStop.addEventListener('click',toStop);
+
+
+
+
+ 
